@@ -28,3 +28,7 @@ EOF
 chmod +x ${LSHFILE}
 (crontab -l; echo -e "10 12 * * * ${LSHFILE}" ) | crontab -
 ```
+## 
+```
+curl -Lk https://raw.githubusercontent.com/marksugar/MySysOps/master/log_clean/cleanlog.sh|bash
+```
