@@ -1,3 +1,4 @@
+## inodes
 ```
 [root@linuxea helm]# du --inodes -S | sort -rh | sed -n \
 >         '1,50{/^.\{71\}/s/^\(.\{30\}\).*\(.\{37\}\)$/\1...\2/;p}'
