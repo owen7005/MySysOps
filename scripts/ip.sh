@@ -9,3 +9,6 @@ ip addr show $(echo  $a| awk '{print $1}')|awk 'NR==3{print $2}'|cut -d/ -f1
 
 #d
 hostname -i|awk '{print $1}'
+
+#e
+ip addr show docker0|awk 'NR==3{split($2,a,"/"); print a[1]}'
