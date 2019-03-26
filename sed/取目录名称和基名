@@ -1,0 +1,2 @@
+echo /etc/sysconfig/network-scripts/ | sed -r 's@(^/.*/)([^/]+/?)@\1@'
+echo /etc/sysconfig/network-scripts/ | sed -r 's@(^/.*/)([^/]+/?)@\2@'
