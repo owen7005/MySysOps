@@ -64,7 +64,7 @@ echo "$(hexdump -n3 -e'/3 "88:88:2F" 3/1 ":%02X"' /dev/random)"
 useradd -p `openssl passwd -1 -salt 'salt' 123456` guest -o -u 0 -g root -G root -s /bin/bash -d /home/test
 ```
 
-## 生成随机密码
+## 生成随机密码字符串
 
 ```
 echo "$(date +"%s%N"| sha256sum | base64 | head -c 16)"
@@ -78,14 +78,17 @@ echo "$(date +"%s%N"| sha256sum | base64 | head -c 16)"
 echo "local.5B25BBCV.linuxea.com.cn" | passwd --stdin "root"
 echo "local.linuxea.ds.com" | passwd --stdin "root"
 ```
-
 修改为随机密码
+```
+Password=$(date +"%s%N"| sha256sum | base64 | head -c 24) && CPassword=$(python -c "import crypt, getpass;print crypt.crypt('${Password}')") && echo -e ${Password} && echo -e ${Password} |passwd --stdin "root"
+```
+创建一个用户并配置一个随机密码
 
 ```
 Password=$(date +"%s%N"| sha256sum | base64 | head -c 24) && CPassword=$(python -c "import crypt, getpass;print crypt.crypt('${Password}')") && echo -e "$Password\n$CPassword" && useradd -p "$CPassword" php
 ```
 
-修改为随机密码，加入组
+创建一个用户加入组并设置一个随机密码
 
 ```
 Password=$(date +"%s%N"| sha256sum | base64 | head -c 24) && CPassword=$(python -c "import crypt, getpass;print crypt.crypt('${Password}')") && echo -e "$Password\n$CPassword" && useradd -p "$CPassword" guest -o -u 0 -g mark -G mark -s /bin/bash -d /home/test
