@@ -80,7 +80,7 @@ unset MAILCHECK
 alias vi='vim'
 
 NodeID=`ip a| awk '$1=="inet" && $2!~"^127"{print $2;exit}'|sed 's/\./_/g;s/\/.*$//'`
-for i in static pretty transient; do hostnamectl set-hostname DS-VM-Node${NodeID}.cluster.com --$i; done
+for i in static pretty transient; do hostnamectl set-hostname Node${NodeID}.cluster.com --$i; done
 PS1='🌟 \[\033[1;33m\u\[\033[1;31m\]@\h 🎁 \[\033[1;32m\]\w 🎄 \[\033[1;36m\]\[\033[0;37m\]❄️ `date +%F" "%T` \n\[\033[1;37m\]$ \[\033[0m\]'
 #PS1='🌟 \[\033[1;33m\u\[\033[1;31m\]@\h 🎁 \[\033[1;32m\]\w 🎄 \[\033[1;36m\]\[\033[0;37m\]❄️ `date +%F` \A  \n\[\033[1;37m\]$ \[\033[0m\]'
 #PS1="\[$(tput bold; tput setaf 2)\]\s\[$(tput sgr0)\] \$"
