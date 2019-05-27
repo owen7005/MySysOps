@@ -4,24 +4,16 @@
 # Author: www.linuxea.com
 # Created Time: 2019年05月27日 星期一 11时23分51秒
 #########################################################################
-echo "Usage: $0 centos_install | debian_install | ubuntu_install "
 docker_compose_install(){
 	curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 	chmod +x /usr/local/bin/docker-compose
 	ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 }
-if [ `type docker |grep /usr/bin/docker|wc -l` = 1 ];then
-	echo "docker-compose 已经安装"
-	exit 1
-else		
-	docker_compose_install
-fi
 if [[ $# == 1 ]]; then
 	case $1 in
 	centos_install)
 		if [ `type docker |grep /usr/bin/docker|wc -l` = 1 ];then
 			echo "docker 已经安装"
-			exit 1
 		else		
 			yum install -y yum-utils \
 			device-mapper-persistent-data \
@@ -31,11 +23,15 @@ if [[ $# == 1 ]]; then
 				https://download.docker.com/linux/centos/docker-ce.repo
 			yum install docker-ce docker-ce-cli containerd.io  -y
 		fi
+		if [ `type docker |grep /usr/bin/docker|wc -l` = 1 ];then
+			echo "docker-compose 已经安装"
+		else		
+			docker_compose_install
+		fi		
 	;;
 	debian_install)
 		if [ `type docker |grep /usr/bin/docker|wc -l` = 1 ];then
 			echo "docker 已经安装"
-			exit 1
 		else
 			apt-get update
 			apt-get install \
@@ -49,13 +45,17 @@ if [[ $# == 1 ]]; then
 			$(lsb_release -cs) \
 			stable"    
 			curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -    
-			apt-get install docker-ce docker-ce-cli containerd.io -y
+			apt-get install docker-ce docker-ce-cli containerd.io -y						
 		fi
+		if [ `type docker |grep /usr/bin/docker|wc -l` = 1 ];then
+			echo "docker-compose 已经安装"
+		else		
+			docker_compose_install
+		fi			
 	;;
 	ubuntu_install)
 		if [ `type docker |grep /usr/bin/docker|wc -l` = 1 ];then
 			echo "docker 已经安装"
-			exit 1
 		else	
 			apt-get update
 			apt-get -y install \
@@ -70,13 +70,16 @@ if [[ $# == 1 ]]; then
 			"deb [arch=amd64] https://download.docker.com/linux/ubuntu \
 			$(lsb_release -cs) \
 			stable"
-			apt-get -y install docker-ce docker-ce-cli containerd.io
+			apt-get -y install docker-ce docker-ce-cli containerd.io		
 		fi
+		if [ `type docker |grep /usr/bin/docker|wc -l` = 1 ];then
+			echo "docker-compose 已经安装"
+		else		
+			docker_compose_install
+		fi			
 	;;
 	*)
-  echo "Usage: $0{centos_install|debian_install|ubuntu_install}" && exit9
+  echo "Usage: $0{centos_install|debian_install|ubuntu_install}"
   ;;
 esac
 fi
-docker-compose --version
-docker --version
