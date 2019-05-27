@@ -9,8 +9,11 @@ docker_compose_install(){
 	chmod +x /usr/local/bin/docker-compose
 	ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 }
-if [[ $# == 1 ]]; then
-	case $1 in
+ARGS=1 
+if [ $# -ne "$ARGS" ];then 
+    echo "Please input one arguement:" 
+fi 
+case $1 in
 	centos_install)
 		if [ `type docker |grep /usr/bin/docker|wc -l` = 1 ];then
 			echo "docker 已经安装"
@@ -45,13 +48,13 @@ if [[ $# == 1 ]]; then
 			$(lsb_release -cs) \
 			stable"    
 			curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -    
-			apt-get install docker-ce docker-ce-cli containerd.io -y						
+			apt-get install docker-ce docker-ce-cli containerd.io -y
 		fi
 		if [ `type docker |grep /usr/bin/docker|wc -l` = 1 ];then
 			echo "docker-compose 已经安装"
-		else		
+		else
 			docker_compose_install
-		fi			
+		fi
 	;;
 	ubuntu_install)
 		if [ `type docker |grep /usr/bin/docker|wc -l` = 1 ];then
@@ -76,10 +79,9 @@ if [[ $# == 1 ]]; then
 			echo "docker-compose 已经安装"
 		else		
 			docker_compose_install
-		fi			
+		fi
 	;;
 	*)
-  echo "Usage: $0{centos_install|debian_install|ubuntu_install}"
+  echo "Usage: $0 {centos_install|debian_install|ubuntu_install}"
   ;;
 esac
-fi
