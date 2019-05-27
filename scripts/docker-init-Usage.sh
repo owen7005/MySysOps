@@ -82,6 +82,6 @@ case $1 in
 		fi
 	;;
 	*)
-  echo "Usage: $0 {centos_install|debian_install|ubuntu_install}"
+  echo "Usage: $0{centos_install|debian_install|ubuntu_install}"
   ;;
 esac
